@@ -54,9 +54,9 @@ tfoot td{font-weight:700;background:var(--g2)}
 .k{border:1px solid #dde3e8;border-top:4px solid var(--c);border-radius:10px;text-align:center;padding:8px}.k b{display:block;font-size:1.05rem;color:var(--c)}.k span{font-size:.72rem;color:#5c6b62}
 .cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}.cb{border:1px solid #dde3e8;border-radius:12px;padding:10px}.cb h4{margin:0 0 6px;font-size:.9rem;color:#14365f}
 .pg th{background:#14365f}.pg td{color:#1b2a3a}.pg ul{margin:0;padding-inline-start:20px;font-size:.88rem}.pg .donut:after{background:#fff}.pg .leg{color:#1b2a3a}
-.ft{border-top:3px solid #14365f;display:flex;justify-content:space-between;font-size:.78rem;font-weight:700;padding-top:6px;margin-top:14px}
+.ft{border-top:3px solid #14365f;display:flex;justify-content:space-between;font-size:.78rem;font-weight:700;padding-top:10px;margin-top:14px}
 .sg{border:1px solid #dde3e8;border-radius:12px;padding:10px;margin-top:14px;font-size:.85rem}.sg i{display:block;width:180px;border-top:2px solid #14365f;margin-top:26px}
-.pg{display:flex;flex-direction:column}.pg>*{flex:none}.pg .ft{margin-top:auto}.pg>:nth-last-child(2){margin-bottom:14px}
+.pg{display:flex;flex-direction:column;aspect-ratio:210/297}.pg>*{flex:none}.pg .ft{margin-top:auto}.pg>:nth-last-child(2){margin-bottom:14px}
 .rh2{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #14365f;padding-bottom:8px;font-size:.8rem}.rh2 .lt{display:flex;gap:8px;align-items:center}.rh2 h2{margin:0;color:#0f6b55;font-size:1.3rem;border:0;padding:0}
 .lg2{border:1px solid #dde3e8;border-radius:8px;width:20mm;padding:1mm;flex:none}
 .cb svg{display:block}.dn{margin:auto}.cr{text-align:center;color:var(--mu);font-size:.8rem;padding:16px 0 8px}@media print{.cr{display:none!important}}.th{width:44px;height:44px;object-fit:cover;border-radius:6px;border:1px solid var(--bd);vertical-align:middle;cursor:pointer}.zm{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);align-items:center;justify-content:center;z-index:9}.zm.on{display:flex}.zm img{max-width:96%;max-height:96%}.inv{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.inv figure{margin:0;border:1px solid #dde3e8;border-radius:8px;padding:6px;text-align:center}.inv img{max-width:100%;max-height:60mm;object-fit:contain}.inv figcaption{font-size:.72rem}.pg th,.pg td{padding:6px 5px;font-size:.78rem}
@@ -67,7 +67,7 @@ tfoot td{font-weight:700;background:var(--g2)}
 .sig{display:flex;justify-content:space-around;margin-top:40px}
 @media print{@page{size:A4;margin:0}
 body{background:#fff;color:#000}.wrap>*:not(#report){display:none!important}
-#report{display:block!important}header.top{display:none}.pg{margin:0;border:0;border-radius:0;max-width:none;width:100%;height:212mm;padding:8mm 12mm 4mm;overflow:hidden;page-break-after:always;break-inside:avoid}.pg:last-child{page-break-after:auto}.pg .tw{overflow:visible}.wrap{padding:0;max-width:none}:root{padding:0}html,body{height:auto;background:#fff}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+#report{display:block!important}header.top{display:none}.pg{margin:0;border:0;border-radius:0;max-width:none;width:100%;height:296mm;padding:11mm 12mm 10mm;overflow:hidden;page-break-after:always;break-inside:avoid}.pg:last-child{page-break-after:auto}.pg .tw{overflow:visible}.wrap{padding:0;max-width:none}:root{padding:0}html,body{height:auto;background:#fff}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
 <body>
@@ -224,7 +224,7 @@ function report(){
  +'<div class=cg style=margin-top:10px><div class=cb><h4>المخصص والمصروف لكل بند</h4><div class=leg><span style=--c:#14365f>المخصص</span><span style=--c:#b4530f>المصروف</span></div>'+bars(r.map(function(x){return x.i.n}),[{v:r.map(function(x){return x.al}),c:'#14365f'},{v:r.map(function(x){return x.c}),c:'#b4530f'}])+'</div>'
  +'<div class=cb><h4>توزيع مصروفات الفترة على البنود</h4>'+donut(r.map(function(x){return x.p}),r.map(function(x){return x.i.c}),S)+''+(S?'':'<div class=leg>لا توجد مصروفات في هذه الفترة</div>')+'<div class=leg>'+r.map(function(x){return '<span style=--c:'+x.i.c+'>'+x.i.n+'</span>'}).join('')+'</div></div></div>';
  var dc='<div class=cb style=margin-top:10px><h4>المصروف حسب '+(days<=8?'اليوم':days<=62?'الأسبوع':'الشهر')+'</h4>'+bars(bl,[{v:bv,c:'#0f6b55'}],700,130)+'</div>';
- var k1=Math.max(2,Math.min(8,11-ITEMS.length)),TX=inP.slice().sort(function(x,y){return x.d<y.d?-1:1}),txt=function(a){return '<div class=tw><table><tr><th>التاريخ</th><th>البند</th><th>الوصف</th><th>المبلغ</th><th>الفاتورة</th></tr>'+(a.length?a.map(function(e){return '<tr><td>'+esc(e.d)+'</td><td>'+ITEMS.filter(function(i){return i.k===e.k})[0].n+'</td><td>'+esc(e.t||'-')+'</td><td>'+fmt(e.c)+'</td><td>'+(e.g?'✓ مرفقة':'—')+'</td></tr>'}).join(''):'<tr><td colspan=5>لا توجد مصروفات مسجلة في هذه الفترة</td></tr>')+'</table></div>'};
+ var k1=Math.max(2,Math.min(12,16-ITEMS.length)),TX=inP.slice().sort(function(x,y){return x.d<y.d?-1:1}),txt=function(a){return '<div class=tw><table><tr><th>التاريخ</th><th>البند</th><th>الوصف</th><th>المبلغ</th><th>الفاتورة</th></tr>'+(a.length?a.map(function(e){return '<tr><td>'+esc(e.d)+'</td><td>'+ITEMS.filter(function(i){return i.k===e.k})[0].n+'</td><td>'+esc(e.t||'-')+'</td><td>'+fmt(e.c)+'</td><td>'+(e.g?'✓ مرفقة':'—')+'</td></tr>'}).join(''):'<tr><td colspan=5>لا توجد مصروفات مسجلة في هذه الفترة</td></tr>')+'</table></div>'};
  var p2='<h3>المصروفات لكل بند</h3><div class=tw><table><tr><th>البند</th><th>المخصص</th><th>مصروف الفترة</th><th>المصروف التراكمي</th><th>المتبقي</th><th>الاستهلاك</th></tr>'
  +r.map(function(x){return '<tr><td>'+x.i.n+'</td><td>'+fmt(x.al)+'</td><td>'+fmt(x.p)+'</td><td>'+fmt(x.c)+'</td><td class='+(x.r<0?'over':'n')+'>'+fmt(x.r)+'</td><td>'+pc(x.u)+'</td></tr>'}).join('')
  +'</table></div><h3>حركات المصروفات في الفترة</h3>'+txt(TX.slice(0,k1));
@@ -239,7 +239,7 @@ function report(){
  +'<h3>خلاصة التقرير</h3><div class=cb style=font-size:.88rem>بلغت الميزانية التشغيلية للمقصف '+fmt(st.total)+'، وبلغ المصروف خلال الفترة من '+hd(f)+' إلى '+hd(to)+' مبلغ '+fmt(S)+' عبر '+n0(inP.length*100)+' حركة، ليصل المصروف التراكمي إلى '+fmt(C)+' ('+pc(C/st.total*100)+') ويبقى '+fmt(st.total-C)+'.'+(S?' وكان أعلى البنود صرفاً: '+best.i.n+'.':'')+'</div>'
  +'<div class=sg>مدير المدرسة<br><b>'+esc(m.principal||'غير محدد')+'</b><i></i>التوقيع</div>';
  var ex=TX.slice(k1),pgs=[[0,p1],['تفصيل المصروفات',p2]];
- for(var c=0;c<ex.length;c+=12)pgs.push(['حركات المصروفات (تابع)','<h3>حركات المصروفات</h3>'+txt(ex.slice(c,c+12))]);
+ for(var c=0;c<ex.length;c+=18)pgs.push(['حركات المصروفات (تابع)','<h3>حركات المصروفات</h3>'+txt(ex.slice(c,c+18))]);
  pgs.push(['المؤشرات والرسوم التحليلية',p3],['التوصيات والخلاصة',p4]);
  if($('rinv').checked){var inv=inP.filter(function(e){return e.g});for(var c2=0;c2<inv.length;c2+=4)pgs.push(['ملحق الفواتير','<div class=inv>'+inv.slice(c2,c2+4).map(function(e){return '<figure><img src="'+e.g+'"><figcaption>'+ITEMS.filter(function(i){return i.k===e.k})[0].n+' — '+fmt(e.c)+' — '+esc(e.d)+'</figcaption></figure>'}).join('')+'</div>'])}NP=pgs.length;
  var hdr2=function(t){return '<div class=rh2><div class=lt><div class=lg2><img alt="شعار وزارة التعليم" src="'+LOGO+'"></div><div><b>الإدارة العامة للتعليم بمنطقة جازان</b><br>'+esc(m.school||'غير محدد')+'<br>'+T+'</div></div><h2>'+t+'</h2></div>'};
