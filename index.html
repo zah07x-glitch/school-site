@@ -191,9 +191,14 @@ function bars(labs,ser,W,H){
    o+='<rect x='+x+' y='+(H-h)+' width='+(bw-3)+' height='+Math.max(h,1)+' rx=3 fill='+s.c+' />'+(s.v[i]?'<text x='+(x+(bw-3)/2)+' y='+(H-h-3)+' font-size=9 text-anchor=middle fill=#1b2a3a>'+n0(s.v[i])+'</text>':'')});
   o+='<text x='+(10+g*gw+gw/2)+' y='+(H+14)+' font-size=9 text-anchor=middle fill=#5c6b62>'+(l.length>16?l.slice(0,15)+'…':l)+'</text>'});
  return o+'<line x1=0 x2='+W+' y1='+H+' y2='+H+' stroke=#ccd3d8 /></svg>'}
-function donut(v,c,S){var C=251.33,o='<svg class=dn viewBox="0 0 100 100" width=120 height=120>',off=0;
- if(!S)o+='<circle cx=50 cy=50 r=40 fill=none stroke=#cfd8d3 stroke-width=16 />';
- else v.forEach(function(x,i){var l=x/S*C;if(l>0)o+='<circle cx=50 cy=50 r=40 fill=none stroke='+c[i]+' stroke-width=16 stroke-dasharray="'+l+' '+(C-l)+'" stroke-dashoffset='+(-off)+' transform="rotate(-90 50 50)" />';off+=l});
+function donut(v,c,S){var o='<svg class=dn viewBox="0 0 100 100" width=120 height=120>',R=46,r=28,a=0,
+ P=function(t,q){return (50+q*Math.sin(t)).toFixed(2)+' '+(50-q*Math.cos(t)).toFixed(2)},
+ ring='M50 4a46 46 0 1 1 0 92a46 46 0 1 1 0-92ZM50 22a28 28 0 1 0 0 56a28 28 0 1 0 0-56Z';
+ if(!S)o+='<path d="'+ring+'" fill=#cfd8d3 fill-rule=evenodd />';
+ else v.forEach(function(x,i){var f=x/S;if(f<=0)return;
+  if(f>=0.9999){o+='<path d="'+ring+'" fill='+c[i]+' fill-rule=evenodd />';return}
+  var e=a+f*2*Math.PI,l=f>0.5?1:0;
+  o+='<path d="M'+P(a,R)+'A'+R+' '+R+' 0 '+l+' 1 '+P(e,R)+'L'+P(e,r)+'A'+r+' '+r+' 0 '+l+' 0 '+P(a,r)+'Z" fill='+c[i]+' stroke=#fff stroke-width=0.6 />';a=e});
  return o+'<text x=50 y=54 font-size=11 font-weight=700 text-anchor=middle fill=#1b2a3a>'+n0(S)+'</text></svg>'}
 function line(labs,v,W,H){
  W=W||420;H=H||160;var n=v.length,mx=Math.max.apply(null,v.concat([1])),pts=[],o='',sp=n>1?(W-60)/(n-1):0;
